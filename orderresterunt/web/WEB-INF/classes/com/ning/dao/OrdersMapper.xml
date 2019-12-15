@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ning.dao.OrdersMapper" >
+  
+	<insert id="addOrders" parameterType="com.ning.bean.Orders">
+		insert into orders (oid,onum,otime,oaddress,uid)
+		values (#{oid},#{onum},#{otime},#{oaddress},#{uid})
+	</insert>
+	
+	<resultMap type="com.ning.bean.Ordersdetail" id="findMyOrders_map">
+		<id column="odid" property="odid" />
+		<result column="odnum" property="odnum" />
+		<result column="oid" property="oid" />
+		<result column="fid" property="fid" />
+		<association property="orders" javaType="com.ning.bean.Orders">
+			<id column="oid" property="oid" />
+			<result column="onum" property="onum" />
+			<result column="otime" property="otime" />
+			<result column="oaddress" property="oaddress" />
+			<result column="ostatus" property="ostatus" />
+			<result column="uid" property="uid" />
+			<association property="user" javaType="com.ning.bean.User">
+				<id column="uid" property="uid" />
+				<result column="uphone" property="uphone" />
+			</association>
+		</association>		
+		<association property="foods" javaType="com.ning.bean.Foods">
+			<id column="fid" property="fid" />
+			<result column="fname" property="fname" />
+			<result column="fmoney" property="fmoney" />
+		</association>
+	</resultMap>
+	
+	<select id="findMyOrders" parameterType="String" resultMap="findMyOrders_map">
+		SELECT od.*,o.*,f.*
+		FROM ordersdetail od,orders o,foods f,USER u
+		WHERE od.oid=o.oid AND od.fid=f.fid AND o.uid=u.uid
+		AND u.uid=#{uid}
+	</select>
+	
+	<update id="updOrdersOstatus" parameterType="String">
+		update orders set ostatus='1' where oid=#{oid}
+	</update>
+  
+	<update id="updOrdersOstatus_2" parameterType="String">
+		update orders set ostatus='2' where oid=#{oid}
+	</update>
+  
+</mapper>

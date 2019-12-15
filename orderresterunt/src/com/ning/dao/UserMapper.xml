@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ning.dao.UserMapper" >
+  
+	<select id="login" parameterType="com.ning.bean.User" resultType="com.ning.bean.User">
+		select * from user where uid=#{uid} and upwd=#{upwd}
+	</select>
+	
+	<update id="updPwd" parameterType="com.ning.bean.User">
+		update user set upwd=#{upwd} where uid=#{uid}
+	</update>
+	
+	<select id="findById" parameterType="String" resultType="com.ning.bean.User">
+		select * from user where uid=#{uid}
+	</select>
+  
+</mapper>

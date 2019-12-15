@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ning.dao.CarMapper" >
+  
+	<insert id="addCar" parameterType="com.ning.bean.Car">
+		insert into car (cmoney,cname,cimage,fid,uid) 
+		values(#{cmoney},#{cname},#{cimage},#{fid},#{uid})
+	</insert>
+	
+	<select id="findByIdCar" parameterType="com.ning.bean.Car" resultType="com.ning.bean.Car">
+		select * from car where fid=#{fid} and uid=#{uid}	
+	</select>
+	
+	<update id="updCnum" parameterType="com.ning.bean.Car">
+		update car set cnum=cnum+1 where fid=#{fid} and uid=#{uid}	
+	</update>
+  
+  	<select id="findUserCar" resultType="com.ning.bean.Car">
+  		select * from car where uid=#{uid}
+  	</select>
+  	
+  	<delete id="delBatch" parameterType="com.ning.bean.Car">
+  		delete from car where cid in
+		<foreach collection="array" item="c" open="(" separator="," close=")" >
+			#{c}
+		</foreach>
+  	</delete>
+  
+  	<select id="findListCar" parameterType="com.ning.bean.Car" resultType="com.ning.bean.Car">
+  		select * from car where cid in
+  		<foreach collection="array" item="c" open="(" separator="," close=")" >
+			#{c}
+		</foreach>
+  	</select>
+  
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ning.dao.UaddressMapper" >
+  
+  	<insert id="addUaddress" parameterType="com.ning.bean.Uaddress">
+  		insert into uaddress (address,uid) values(#{address},#{uid})
+  	</insert>
+  	
+  	<select id="findUaddress" resultType="com.ning.bean.Uaddress">
+  		select * from uaddress where uid=#{uid}
+  	</select>
+  
+  	<delete id="delUaddress" parameterType="int">
+		delete from uaddress where aid=#{aid}  	
+  	</delete>
+  	
+  	<select id="findUserUaddress" parameterType="String" resultType="com.ning.bean.Uaddress">
+  		select * from uaddress where uid=#{uid}
+  	</select>
+  
+</mapper>
